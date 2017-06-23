@@ -166,7 +166,7 @@ public class FileManager extends javax.swing.JFrame {
             if (jTextArea1.getText().isEmpty() == false) {
                 jTextArea1.setText("");
             }
-            
+             
                 for (File k : roots) {
                     if (k != null) {
                         jTextArea1.append("" + k + "\n");

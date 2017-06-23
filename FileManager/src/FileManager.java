@@ -4,15 +4,18 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.ListModel;
 import javax.swing.filechooser.FileSystemView;
 
 public class FileManager extends javax.swing.JFrame {
-
+    
     public FileManager() {
         initComponents();
-
+        
         File[] drives = File.listRoots();
         /*JComboBox allDrives = new JComboBox(drives);
         jPanel1.add(allDrives);
@@ -35,15 +38,16 @@ public class FileManager extends javax.swing.JFrame {
             }
         });*/
         DefaultComboBoxModel dcm = (DefaultComboBoxModel) driveSelect.getModel();
-
+        
         dcm.removeAllElements();
-
-        for (int i = 0; i < drives.length; i++) {
-
-            dcm.addElement(drives[i]);
+        
+        for (File drive : drives) {
+            dcm.addElement(drive);
         }
         driveSelect.setModel(dcm);
-
+        driveSelect.setSelectedIndex(0);
+        
+        
     }
 
     /**
@@ -57,27 +61,17 @@ public class FileManager extends javax.swing.JFrame {
 
         jScrollBar1 = new javax.swing.JScrollBar();
         jPanel1 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextArea2 = new javax.swing.JTextArea();
         driveSelect = new javax.swing.JComboBox<>();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jList1 = new javax.swing.JList<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("File Manager");
 
-        jButton1.setText("Confirm");
-
-        jButton2.setText("Cancel");
-
         jLabel1.setText("Look In:");
-
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
 
         jTextArea2.setColumns(20);
         jTextArea2.setRows(5);
@@ -90,33 +84,32 @@ public class FileManager extends javax.swing.JFrame {
             }
         });
 
+        jList1.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane3.setViewportView(jList1);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(65, 65, 65)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(174, 174, 174)
-                        .addComponent(jButton1)
-                        .addGap(111, 111, 111)
-                        .addComponent(jButton2)))
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane2)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(49, 49, 49)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 538, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 45, Short.MAX_VALUE)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addGap(249, 249, 249)
+                                    .addComponent(driveSelect, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addGap(65, 65, 65)
+                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(0, 205, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(249, 249, 249)
-                .addComponent(driveSelect, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -126,13 +119,10 @@ public class FileManager extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 366, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(54, 54, 54)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(128, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -151,33 +141,47 @@ public class FileManager extends javax.swing.JFrame {
 
     private void driveSelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_driveSelectActionPerformed
         // TODO add your handling code here:
+        
         File cur = (File) driveSelect.getSelectedItem();
         FileSystemView fv = FileSystemView.getFileSystemView();
         
-        if(cur!=null){
+        if (cur != null) {
             jTextArea2.setText("Drive name " + cur + "\nType: "
                     + fv.getSystemTypeDescription(cur) + "\nTotal Space: "
                     + cur.getTotalSpace() / (1000000000) + "GB\nFree Space: " + cur.getFreeSpace() / (1000000000) + " GB");
-        
-        }
-        if (cur.length() > 0) {
-            File[] roots = cur.listFiles();
             
-            if (jTextArea1.getText().isEmpty() == false) {
-                jTextArea1.setText("");
+        }
+        DefaultListModel lm1  = new DefaultListModel();
+        if (cur != null && cur.length() > 0) {
+            String[] roots = cur.list();
+            
+            jList1.setModel(lm1);
+            
+            if(lm1.size()>0){
+                lm1.removeAllElements();
             }
-             
-                for (File k : roots) {
-                    if (k != null) {
-                        jTextArea1.append("" + k + "\n");
-                    }
-                }
+            for(String k:roots)
+                lm1.addElement(k);
+            
             
         }
-
+        else if(cur!=null && cur.length()==0){
+            System.out.println("else if");
+            lm1.removeAllElements();
+            lm1.addElement("Empty Drive");
+            jList1.setModel(lm1);
+        }
+        
+        
+        
+        
+            
+            
+            
+        
 
     }//GEN-LAST:event_driveSelectActionPerformed
-
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -208,19 +212,17 @@ public class FileManager extends javax.swing.JFrame {
                 new FileManager().setVisible(true);
             }
         });
-
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> driveSelect;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JList<String> jList1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollBar jScrollBar1;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTextArea jTextArea2;
     // End of variables declaration//GEN-END:variables
 

@@ -1,13 +1,18 @@
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.IOException;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.ListModel;
 import javax.swing.filechooser.FileSystemView;
-import newpackage.SubDirectories;
 
 public class FileManager extends javax.swing.JFrame {
     
-    private File[] roots;
     public FileManager() {
         initComponents();
         
@@ -84,11 +89,6 @@ public class FileManager extends javax.swing.JFrame {
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
-        jList1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jList1MouseClicked(evt);
-            }
-        });
         jScrollPane3.setViewportView(jList1);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -153,22 +153,22 @@ public class FileManager extends javax.swing.JFrame {
         }
         DefaultListModel lm1  = new DefaultListModel();
         if (cur != null && cur.length() > 0) {
-             roots = cur.listFiles();
+            String[] roots = cur.list();
             
             jList1.setModel(lm1);
             
             if(lm1.size()>0){
                 lm1.removeAllElements();
             }
-            for(File k:roots)
+            for(String k:roots)
                 lm1.addElement(k);
             
             
         }
         else if(cur!=null && cur.length()==0){
-            
+            System.out.println("else if");
             lm1.removeAllElements();
-            lm1.addElement(null);
+            lm1.addElement("Empty Drive");
             jList1.setModel(lm1);
         }
         
@@ -181,18 +181,6 @@ public class FileManager extends javax.swing.JFrame {
         
 
     }//GEN-LAST:event_driveSelectActionPerformed
-
-    private void jList1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jList1MouseClicked
-        // TODO add your handling code here:
-        if(evt.getClickCount()==2){
-            int jj=jList1.getSelectedIndex();
-            File k=roots[jj];
-            System.out.println(k);
-            
-            new SubDirectories(k).setVisible(true);
-            dispose();
-        }
-    }//GEN-LAST:event_jList1MouseClicked
     
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

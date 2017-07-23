@@ -22,7 +22,7 @@ public class Receive extends javax.swing.JFrame {
         initComponents();
         JComboBox list = new JComboBox(bloodGrp);
         list.setSelectedIndex(0);
-        list.addActionListener((ActionListener) this);
+        //list.addActionListener((ActionListener) this);
     }
 
     /**

@@ -172,7 +172,7 @@ public class Register extends javax.swing.JFrame {
         boolean correct=true;
         
         for(int i=0;i<agenum.length();i++){
-            if(agenum.charAt(i)<='0' || agenum.charAt(i)>='9'){
+            if(agenum.charAt(i)<'0' || agenum.charAt(i)>'9'){
                 correct=false;
                 break;
             }
@@ -181,7 +181,7 @@ public class Register extends javax.swing.JFrame {
         boolean correct1=true;
         
             for(int i=0;i<phn.length();i++){
-                if(phn.charAt(i)<='0' || phn.charAt(i)>='9')
+                if(phn.charAt(i)<'0' || phn.charAt(i)>'9')
                     correct1=false;
                     break;
             }
@@ -190,7 +190,7 @@ public class Register extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "All fields are mandatory");
         }
         
-        else if(phn.length()<10){
+        else if(phn.length()!=10){
             JOptionPane.showMessageDialog(this, "Please enter a valid phone number");
         }
         else if(correct1==false){
@@ -209,6 +209,13 @@ public class Register extends javax.swing.JFrame {
         }
         
         else{
+            
+            int a=JOptionPane.showConfirmDialog(this, "Do you want to register ?");
+                    
+            if(a==JOptionPane.NO_OPTION){
+                ;
+            }
+            else if(a==JOptionPane.YES_OPTION){
         
         
         
@@ -219,7 +226,7 @@ public class Register extends javax.swing.JFrame {
 
                 PreparedStatement ps=con.prepareCall("insert into members values(?,?,?,?,?,?)");
 
-                ps.setInt(1, 1);
+                ps.setInt(1, Integer.parseInt(memberId.getText()));
                 ps.setString(2,fname);
 
                 ps.setString(3,lname);
@@ -229,13 +236,20 @@ public class Register extends javax.swing.JFrame {
                 ps.setInt(5,Integer.parseInt(agenum));
 
                 ps.setString(6,bg);
-                if(ps.executeUpdate()>0)
-                    System.out.println("yes");
-                else
-                    System.out.println("No");
+                if(ps.executeUpdate()>0){
+                    JOptionPane.showMessageDialog(this, "Successfully Registered ! ");
+                    
+                    new Donate().setVisible(true);
+                    
+                    dispose();
+                }
+                else{
+                    JOptionPane.showMessageDialog(this ,"Try again later ! ");
+                }
             }
             catch(Exception e){
                 System.out.println(e);
+            }
             }
         }
         

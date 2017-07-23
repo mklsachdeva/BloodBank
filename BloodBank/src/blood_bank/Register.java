@@ -274,7 +274,8 @@ public class Register extends javax.swing.JFrame {
 
                 ps.setString(6,bg);
                 if(ps.executeUpdate()>0){
-                    JOptionPane.showMessageDialog(this, "Successfully Registered ! ");
+                    JOptionPane.showMessageDialog(this, "Successfully Registered ! \n Login ID : "+ID+
+                            "\n Password : Your Mobile Number");
                     ID++;
                     new Donate().setVisible(true);
                     

@@ -8,6 +8,7 @@ package blood_bank;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -18,16 +19,40 @@ import javax.swing.event.DocumentListener;
  */
 public class Register extends javax.swing.JFrame {
     public static int ID;
+    private Connection con;
     /**
      * Creates new form Register
      * @param id
      */
-    public Register(int id) {
+    public Register() {
         initComponents();
-        ID=id;
-        memberId.setText(""+id);
+        
+        
+        try{
+        Class.forName("oracle.jdbc.driver.OracleDriver");
+
+        con=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","system","sachdeva@123");
+        
+        PreparedStatement pst=con.prepareCall("Select count(id) from members");
+                
+        ResultSet rs=pst.executeQuery();
+        while(rs.next()){
+            ID=rs.getInt(1)+1;
+        }
+        memberId.setText(""+(ID+1));
+        memberId.setEditable(false);
+        
+        }
+        catch(Exception E){
+            JOptionPane.showMessageDialog(this, E);
+        }
+        
+        
     }
     
+    public static int getId(){
+        return ID;
+    }
     
         
     /**
@@ -53,6 +78,7 @@ public class Register extends javax.swing.JFrame {
         age = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         bloodGroup = new javax.swing.JComboBox<>();
+        jLabel7 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -83,6 +109,10 @@ public class Register extends javax.swing.JFrame {
 
         bloodGroup.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "B+", "A+", "AB+", "O+", "O-" }));
 
+        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel7.setText("REGISTRATION PAGE");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -90,13 +120,13 @@ public class Register extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(131, 131, 131)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
                     .addComponent(jLabel3)
                     .addComponent(jLabel4)
                     .addComponent(jLabel5)
-                    .addComponent(jLabel6))
-                .addGap(109, 109, 109)
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(90, 90, 90)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lastName)
                     .addComponent(firstName)
@@ -106,14 +136,21 @@ public class Register extends javax.swing.JFrame {
                     .addComponent(bloodGroup, 0, 111, Short.MAX_VALUE))
                 .addGap(193, 193, 193))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(212, 212, 212)
-                .addComponent(jButton1)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(212, 212, 212)
+                        .addComponent(jButton1))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(195, 195, 195)
+                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(93, 93, 93)
+                .addGap(27, 27, 27)
+                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(31, 31, 31)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(memberId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -220,10 +257,10 @@ public class Register extends javax.swing.JFrame {
         
         
             try{
-            Class.forName("oracle.jdbc.driver.OracleDriver");
-
-                Connection con=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","system","sachdeva@123");
-
+                
+                
+                
+                
                 PreparedStatement ps=con.prepareCall("insert into members values(?,?,?,?,?,?)");
 
                 ps.setInt(1, Integer.parseInt(memberId.getText()));
@@ -238,13 +275,15 @@ public class Register extends javax.swing.JFrame {
                 ps.setString(6,bg);
                 if(ps.executeUpdate()>0){
                     JOptionPane.showMessageDialog(this, "Successfully Registered ! ");
-                    
+                    ID++;
                     new Donate().setVisible(true);
                     
                     dispose();
                 }
                 else{
+                    
                     JOptionPane.showMessageDialog(this ,"Try again later ! ");
+                    
                 }
             }
             catch(Exception e){
@@ -293,7 +332,7 @@ public class Register extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Register(ID).setVisible(true);
+                new Register().setVisible(true);
             }
         });
     }
@@ -309,6 +348,7 @@ public class Register extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField lastName;
     private javax.swing.JTextField memberId;

@@ -5,6 +5,7 @@
  */
 package blood_bank;
 
+import blood_bank.Register;
 /**
  *
  * @author Mukul Sachdeva
@@ -175,8 +176,9 @@ public class Donate extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        new Register(id).setVisible(true);
-        dispose();
+        new Register().setVisible(true);
+        
+        
         
         
     }//GEN-LAST:event_jButton3ActionPerformed

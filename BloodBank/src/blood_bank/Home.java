@@ -35,16 +35,18 @@ public class Home extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(255, 0, 0));
+        jPanel1.setBackground(new java.awt.Color(204, 204, 255));
 
         jButton1.setText("DONATE");
 
         jButton2.setText("RECEIVE");
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 0, 0));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("BLOOD BANK");
 
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/blood_bank/images.jpeg"))); // NOI18N
         jLabel2.setText("jLabel2");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -54,26 +56,26 @@ public class Home extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(112, 112, 112)
+                        .addGap(99, 99, 99)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(41, 41, 41)
+                        .addGap(64, 64, 64)
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(178, 178, 178)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(245, 245, 245)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(136, Short.MAX_VALUE))
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(185, 185, 185)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(126, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(38, 38, 38)
+                .addGap(36, 36, 36)
                 .addComponent(jLabel1)
-                .addGap(31, 31, 31)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(58, 58, 58)
+                .addGap(33, 33, 33)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))

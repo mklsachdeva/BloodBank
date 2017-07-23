@@ -234,7 +234,7 @@ public class Register extends javax.swing.JFrame {
                 else
                     System.out.println("No");
             }
-                catch(Exception e){
+            catch(Exception e){
                 System.out.println(e);
             }
         }

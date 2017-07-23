@@ -8,24 +8,28 @@ package blood_bank;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import javax.swing.JOptionPane;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 /**
  *
  * @author Mukul Sachdeva
  */
 public class Register extends javax.swing.JFrame {
-
+    public static int ID;
     /**
      * Creates new form Register
+     * @param id
      */
-    public Register() {
+    public Register(int id) {
         initComponents();
-        
-        
+        ID=id;
+        memberId.setText(""+id);
     }
     
     
-
+        
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -36,9 +40,39 @@ public class Register extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        memberId = new javax.swing.JTextField();
+        firstName = new javax.swing.JTextField();
+        lastName = new javax.swing.JTextField();
+        phone = new javax.swing.JTextField();
+        age = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
+        bloodGroup = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jLabel1.setText("Member ID");
+
+        jLabel2.setText("First Name");
+
+        jLabel3.setText("Last Name");
+
+        jLabel4.setText("Phone Number");
+
+        jLabel5.setText("Age");
+
+        jLabel6.setText("Blood Group");
+
+        firstName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                firstNameActionPerformed(evt);
+            }
+        });
 
         jButton1.setText("Register");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -47,21 +81,65 @@ public class Register extends javax.swing.JFrame {
             }
         });
 
+        bloodGroup.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "B+", "A+", "AB+", "O+", "O-" }));
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(311, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(131, 131, 131)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel6))
+                .addGap(109, 109, 109)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lastName)
+                    .addComponent(firstName)
+                    .addComponent(memberId)
+                    .addComponent(age)
+                    .addComponent(phone)
+                    .addComponent(bloodGroup, 0, 111, Short.MAX_VALUE))
+                .addGap(193, 193, 193))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(212, 212, 212)
                 .addComponent(jButton1)
-                .addGap(219, 219, 219))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(180, 180, 180)
+                .addGap(93, 93, 93)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(memberId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(28, 28, 28)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(firstName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addGap(34, 34, 34)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(lastName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(32, 32, 32)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(phone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(34, 34, 34)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(age, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(33, 33, 33)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(bloodGroup, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
                 .addComponent(jButton1)
-                .addContainerGap(274, Short.MAX_VALUE))
+                .addGap(32, 32, 32))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -80,33 +158,96 @@ public class Register extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        try{
+        
+        
+        String fname=firstName.getText();
+        String lname=lastName.getText();
+        
+        String agenum=age.getText();
+        
+        String phn=phone.getText();
+        
+        String bg=bloodGroup.getSelectedItem().toString();
+        
+        boolean correct=true;
+        
+        for(int i=0;i<agenum.length();i++){
+            if(agenum.charAt(i)<='0' || agenum.charAt(i)>='9'){
+                correct=false;
+                break;
+            }
+        }
+        
+        boolean correct1=true;
+        
+            for(int i=0;i<phn.length();i++){
+                if(phn.charAt(i)<='0' || phn.charAt(i)>='9')
+                    correct1=false;
+                    break;
+            }
+        
+        if(fname.length()==0 || lname.length()==0 || agenum.length()==0 || phn.length()==0 || bg.length()==0){
+            JOptionPane.showMessageDialog(this, "All fields are mandatory");
+        }
+        
+        else if(phn.length()<10){
+            JOptionPane.showMessageDialog(this, "Please enter a valid phone number");
+        }
+        else if(correct1==false){
             
+            JOptionPane.showMessageDialog(this, "Phone number should be numeric");
+            
+        }
+        else if(correct == false ){
+            JOptionPane.showMessageDialog(this, "Age should be numeric");
+            
+        }
+        else if(correct==true && (Integer.parseInt(agenum)<18 || Integer.parseInt(agenum)>60)){
+            
+            JOptionPane.showMessageDialog(this, "You are not allowed to donate blood ! \n Age must be between 18 and 60");
+            
+        }
+        
+        else{
+        
+        
+        
+            try{
             Class.forName("oracle.jdbc.driver.OracleDriver");
-            
-            Connection con=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","system","sachdeva@123");
-            
-            PreparedStatement ps=con.prepareCall("insert into members values(?,?,?,?,?,?)");
-            
-            ps.setInt(1, 1);
-            ps.setString(2,"mukul");
-            
-            ps.setString(3,"sachdeva");
-            
-            ps.setString(4, "9650068393");
-            
-            ps.setInt(5,20);
-            
-            ps.setString(6,"B+");
-            if(ps.executeUpdate()>0)
-                System.out.println("yes");
-            else
-                System.out.println("No");
+
+                Connection con=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","system","sachdeva@123");
+
+                PreparedStatement ps=con.prepareCall("insert into members values(?,?,?,?,?,?)");
+
+                ps.setInt(1, 1);
+                ps.setString(2,fname);
+
+                ps.setString(3,lname);
+
+                ps.setString(4, phn);
+
+                ps.setInt(5,Integer.parseInt(agenum));
+
+                ps.setString(6,bg);
+                if(ps.executeUpdate()>0)
+                    System.out.println("yes");
+                else
+                    System.out.println("No");
+            }
+                catch(Exception e){
+                System.out.println(e);
+            }
         }
-        catch(Exception e){
-            System.out.println(e);
-        }
+        
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void firstNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_firstNameActionPerformed
+        // TODO add your handling code here:
+        
+        
+        
+        
+    }//GEN-LAST:event_firstNameActionPerformed
 
     /**
      * @param args the command line arguments
@@ -138,13 +279,25 @@ public class Register extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Register().setVisible(true);
+                new Register(ID).setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField age;
+    private javax.swing.JComboBox<String> bloodGroup;
+    private javax.swing.JTextField firstName;
     private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JTextField lastName;
+    private javax.swing.JTextField memberId;
+    private javax.swing.JTextField phone;
     // End of variables declaration//GEN-END:variables
 }

@@ -11,6 +11,7 @@ package blood_bank;
  */
 public class Donate extends javax.swing.JFrame {
 
+    public static int id=1;
     /**
      * Creates new form Donate
      */
@@ -174,7 +175,7 @@ public class Donate extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        new Register().setVisible(true);
+        new Register(id).setVisible(true);
         dispose();
         
         

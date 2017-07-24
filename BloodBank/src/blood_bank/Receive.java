@@ -16,7 +16,7 @@ public class Receive extends javax.swing.JFrame {
 
     /**
      * Creates new form Receive
-     */
+    */
     String[] bloodGrp = {"A+","A-","B+","B-","AB+","AB-","O+","O-"};
     public Receive() {
         initComponents();
@@ -122,6 +122,8 @@ public class Receive extends javax.swing.JFrame {
                 new Receive().setVisible(true);
             }
         });
+        
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

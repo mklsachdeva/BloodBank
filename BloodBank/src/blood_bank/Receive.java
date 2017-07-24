@@ -9,6 +9,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.awt.event.ActionListener;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
@@ -25,11 +26,15 @@ public class Receive extends javax.swing.JFrame {
         String requestedBloodGrp;
     int requestedAmount;
 
-
     public Receive() {
         initComponents();
-        JComboBox list = new JComboBox(bloodGrp);
-        list.setSelectedIndex(0);
+        DefaultComboBoxModel model = (DefaultComboBoxModel)jComboBox1.getModel();
+        model.removeAllElements();
+        for(int j=0;j<bloodGrp.length;j++)
+            model.addElement(bloodGrp[j]);
+        
+        jComboBox1.setModel(model);
+        jComboBox1.setSelectedIndex(0);
     }
 
     /**
@@ -122,8 +127,8 @@ public class Receive extends javax.swing.JFrame {
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:
-        JComboBox cb = (JComboBox)evt.getSource();
-         requestedBloodGrp = (String)cb.getSelectedItem();
+       
+         requestedBloodGrp = (String)jComboBox1.getSelectedItem();
        // jLabel2.setText(requestedBloodGrp);
     }//GEN-LAST:event_jComboBox1ActionPerformed
 

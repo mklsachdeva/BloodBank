@@ -18,7 +18,7 @@ import javax.swing.event.DocumentListener;
  * @author Mukul Sachdeva
  */
 public class Register extends javax.swing.JFrame {
-    public static int ID;
+    public static int ID=0;
     private Connection con;
     /**
      * Creates new form Register
@@ -37,9 +37,9 @@ public class Register extends javax.swing.JFrame {
                 
         ResultSet rs=pst.executeQuery();
         while(rs.next()){
-            ID=rs.getInt(1)+1;
+            ID=rs.getInt(1);
         }
-        memberId.setText(""+(ID+1));
+        memberId.setText(""+(++ID));
         memberId.setEditable(false);
         
         }
@@ -275,7 +275,7 @@ public class Register extends javax.swing.JFrame {
                 ps.setString(6,bg);
                 if(ps.executeUpdate()>0){
                     JOptionPane.showMessageDialog(this, "Successfully Registered ! \nLogin Id : "+ID+" \nPassword : Your Mobile Number");
-                    ID++;
+                    
                     new Donate().setVisible(true);
                     
                     dispose();

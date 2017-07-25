@@ -143,12 +143,18 @@ public class Receive extends javax.swing.JFrame {
        requestedAmount = Integer.parseInt(jTextField1.getText());
        Class.forName("oracle.jdbc.driver.OracleDriver");
          Connection con=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","system","sachdeva@123");
-PreparedStatement ps=con.prepareCall("select quantity from details where bloodGroup = ?)");
+PreparedStatement ps=con.prepareCall("select quantity from availability where bloodGroup = ?)");
        ps.setString(1,requestedBloodGrp);
        ResultSet rs = ps.executeQuery();
-       int amount = rs.getInt("Quantity");
+       int amount = rs.getInt("quantity");
        if(amount>= requestedAmount)
+       {
+           PreparedStatement ps2 = con.prepareCall("update availability set quantity = ? where bloodGrp = ?");
+           ps2.setInt(1,amount-requestedAmount);
+           ps2.setString(2,requestedBloodGrp);
+           ps2.executeUpdate();
            jLabel2.setText("Request Successful");
+       }
        else
            jLabel2.setText("Sorry. Not available");
          }

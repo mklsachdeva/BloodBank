@@ -6,18 +6,38 @@
 package blood_bank;
 
 import blood_bank.Register;
+import static blood_bank.Register.ID;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import javax.swing.JOptionPane;
 /**
  *
  * @author Mukul Sachdeva
  */
 public class Donate extends javax.swing.JFrame {
 
-    public static int id=1;
+    
+    private Connection con;
     /**
      * Creates new form Donate
      */
     public Donate() {
         initComponents();
+        
+        try{
+        Class.forName("oracle.jdbc.driver.OracleDriver");
+
+        con=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","system","sachdeva@123");
+        }
+        catch(Exception E){
+            System.out.println(E);
+        }
+        
+        
     }
 
     /**
@@ -34,11 +54,11 @@ public class Donate extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        memberId = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
+        Enter = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-        jPasswordField1 = new javax.swing.JPasswordField();
+        password = new javax.swing.JPasswordField();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
 
@@ -46,7 +66,7 @@ public class Donate extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 255));
 
-        jButton1.setText("Back");
+        jButton1.setText("Home");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -62,7 +82,12 @@ public class Donate extends javax.swing.JFrame {
 
         jLabel4.setText("Not a member yet ?");
 
-        jButton2.setText("Enter");
+        Enter.setText("Enter");
+        Enter.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EnterActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("Register");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -96,8 +121,8 @@ public class Donate extends javax.swing.JFrame {
                                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addGap(117, 117, 117)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE)
-                                    .addComponent(jPasswordField1)))
+                                    .addComponent(memberId, javax.swing.GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE)
+                                    .addComponent(password)))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(153, 153, 153)
                                 .addComponent(jLabel4)
@@ -105,7 +130,7 @@ public class Donate extends javax.swing.JFrame {
                                 .addComponent(jButton3))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(249, 249, 249)
-                                .addComponent(jButton2))
+                                .addComponent(Enter))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(233, 233, 233)
                                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -118,7 +143,7 @@ public class Donate extends javax.swing.JFrame {
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 114, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 110, Short.MAX_VALUE)
                                 .addComponent(jButton1)))))
                 .addContainerGap())
         );
@@ -136,14 +161,14 @@ public class Donate extends javax.swing.JFrame {
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(memberId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
                 .addGap(37, 37, 37)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPasswordField1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(password, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(36, 36, 36)
-                .addComponent(jButton2)
+                .addComponent(Enter)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
@@ -183,6 +208,74 @@ public class Donate extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    private void EnterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EnterActionPerformed
+        // TODO add your handling code here:
+        
+        String userId=memberId.getText();
+        
+        String pass=new String(password.getPassword());
+        boolean correct=true;
+        
+        for(int i=0;i<userId.length();i++){
+            if(userId.charAt(i)<'0' || userId.charAt(i)>'9')
+            {
+                correct=false;
+                break;
+            }
+        }
+        if(userId.length()==0 ){
+            
+            JOptionPane.showMessageDialog(this,"Please enter Id to login");
+        }
+        
+        else if(pass.length()==0){
+            
+            JOptionPane.showMessageDialog(this,"Please enter password to login");
+            
+        }
+        else if(!correct){
+            
+            JOptionPane.showMessageDialog(this,"ID must be numeric");
+            
+        }
+        else{
+            
+            try{
+        
+                PreparedStatement pst=con.prepareCall("Select phone from members where id=?");
+                
+                pst.setInt(1,Integer.parseInt(userId));
+                
+                ResultSet rs=pst.executeQuery();
+                String phn="";
+                boolean exists=false;
+                while(rs.next()){
+                    exists=true;
+                    phn=rs.getString(1);
+                }
+                if(!exists){
+                    
+                    JOptionPane.showMessageDialog(this,"ID does not exist ");
+                }
+                else if(!phn.equals(pass)){
+                    JOptionPane.showMessageDialog(this,"Password does not match with ID");
+                }
+                
+                else if(phn.equals(pass)){
+                    JOptionPane.showMessageDialog(this,"Login successful !");
+                    new DonateBlood(Integer.parseInt(userId)).setVisible(true);
+                    
+                    dispose();
+                }
+            
+        }
+        catch(Exception E){
+                
+        }
+        }
+        
+    }//GEN-LAST:event_EnterActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -219,8 +312,8 @@ public class Donate extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Enter;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -229,7 +322,7 @@ public class Donate extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField memberId;
+    private javax.swing.JPasswordField password;
     // End of variables declaration//GEN-END:variables
 }

@@ -28,8 +28,11 @@ public class Receive extends javax.swing.JFrame {
 
     public Receive() {
         initComponents();
-        JComboBox list = new JComboBox(bloodGrp);
-        list.setSelectedIndex(0);
+        jComboBox1 = new JComboBox(bloodGrp);
+        jComboBox1.setSelectedIndex(0);
+        //jComboBox1.addActionListener();
+        
+                
     }
 
     /**

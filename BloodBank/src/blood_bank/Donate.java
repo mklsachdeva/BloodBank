@@ -22,6 +22,7 @@ public class Donate extends javax.swing.JFrame {
 
     
     private Connection con;
+    private String grp;
     /**
      * Creates new form Donate
      */
@@ -242,16 +243,18 @@ public class Donate extends javax.swing.JFrame {
             
             try{
         
-                PreparedStatement pst=con.prepareCall("Select phone from members where id=?");
+                PreparedStatement pst=con.prepareCall("Select blood_group, phone from members where id=?");
                 
                 pst.setInt(1,Integer.parseInt(userId));
                 
                 ResultSet rs=pst.executeQuery();
                 String phn="";
+                grp="";
                 boolean exists=false;
                 while(rs.next()){
                     exists=true;
-                    phn=rs.getString(1);
+                    phn=rs.getString(2);
+                    grp=rs.getString(1);
                 }
                 if(!exists){
                     
@@ -263,7 +266,7 @@ public class Donate extends javax.swing.JFrame {
                 
                 else if(phn.equals(pass)){
                     JOptionPane.showMessageDialog(this,"Login successful !");
-                    new DonateBlood(Integer.parseInt(userId)).setVisible(true);
+                    new DonateBlood(Integer.parseInt(userId),grp).setVisible(true);
                     
                     dispose();
                 }

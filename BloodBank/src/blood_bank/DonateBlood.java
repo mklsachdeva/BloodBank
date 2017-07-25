@@ -24,13 +24,14 @@ public class DonateBlood extends javax.swing.JFrame {
     
     private static int userId=0;
     private Connection con;
+    private static String grp="";
     /**
      * Creates new form DonateBlood
      */
-    public DonateBlood(int id) {
+    public DonateBlood(int id,String bgrp) {
         initComponents();
         userId=id;
-        
+        grp=bgrp;
         try{
         Class.forName("oracle.jdbc.driver.OracleDriver");
 
@@ -139,7 +140,9 @@ public class DonateBlood extends javax.swing.JFrame {
         java.sql.Timestamp date = new java.sql.Timestamp(new java.util.Date().getTime());
         Date dat1;
         try{
-            PreparedStatement ps=con.prepareCall("Select donatedon from donors where id=1 order by donatedon ");
+            
+            PreparedStatement ps=con.prepareCall("Select donatedon from donors where id=? order by donatedon ");
+            ps.setInt(1,userId);
             ResultSet rs1=ps.executeQuery();
             
             int year=0;
@@ -194,10 +197,14 @@ public class DonateBlood extends javax.swing.JFrame {
                 if(allow){
             
             try{
-            PreparedStatement pst=con.prepareCall("Insert into donors values(?,?,?)");
+            PreparedStatement pst=con.prepareCall("Insert into donors values(?,?,?,?)");
+            
+            
             pst.setInt(1,userId);
             pst.setInt(2,value);
             pst.setTimestamp(3, date);
+            pst.setString(4,grp);
+            
             
             if(pst.executeUpdate()>0){
                 JOptionPane.showMessageDialog(this, "Thankyou !");
@@ -205,7 +212,50 @@ public class DonateBlood extends javax.swing.JFrame {
             else{
                 System.out.println("Error");
             }
+            
+            PreparedStatement pst1=con.prepareCall(" Select QUANTITY from AVAILABILITY where bloodgrp=?");
+            pst1.setString(1,grp);
+            ResultSet rst=pst1.executeQuery();
+            int quantity =0;
+            boolean exists=false;
+            
+            while(rst.next()){
+                
+                exists=true;
+                quantity=rst.getInt(1);
+                
+                
             }
+            if(exists){
+                
+                quantity=quantity+value;
+                PreparedStatement p=con.prepareCall("Update availability set quantity=? where bloodgrp= ? ");
+                p.setInt(1,quantity);
+                p.setString(2,grp);
+                if(p.executeUpdate()>0){
+                    System.out.println("availabilty updated");
+                }else{
+                    System.out.println("not updated");
+                }
+            }
+            else{
+                
+                PreparedStatement p=con.prepareCall("Insert into availability values(?,?)");
+                p.setString(1,grp);
+                p.setInt(2,value);
+                
+                if(p.executeUpdate()>0){
+                    System.out.println("availabilty insert");
+                }else{
+                    System.out.println("not insert");
+                }
+                
+                
+                
+            }
+            }
+            
+            
         catch(Exception e){
             System.out.println(e);
         }
@@ -250,7 +300,7 @@ public class DonateBlood extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new DonateBlood(userId).setVisible(true);
+                new DonateBlood(userId,grp).setVisible(true);
             }
         });
     }
